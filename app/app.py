@@ -3,6 +3,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
+spell = st.secrets.section_1.secret2
+st.write(spell)
 
 x = st.slider('x')  # 👈 this is a widget
 
