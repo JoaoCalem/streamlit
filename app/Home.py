@@ -2,6 +2,27 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+from audio_recorder_streamlit import audio_recorder
+import wave
+import contextlib
+
+st.set_page_config(
+    page_title="Hello",
+    page_icon="👋",
+)
+
+AUDIO_FILE_NAME = 'myfile.wav'
+
+audio_bytes = audio_recorder(energy_threshold=[-1.0,1.0], pause_threshold=15)
+if audio_bytes:
+    with open(AUDIO_FILE_NAME, mode='bw') as f:
+        f.write(audio_bytes)
+    with contextlib.closing(wave.open(AUDIO_FILE_NAME,'r')) as f:
+        frames = f.getnframes()
+        rate = f.getframerate()
+        duration = frames / float(rate)
+    if duration > 1:
+        st.write(duration)
 
 spell = st.secrets.section_1.secret2
 st.write(spell)
